@@ -1,0 +1,21 @@
+# 忽略训练结果
+runs/
+
+# 忽略缓存
+__pycache__/
+*.py[cod]
+
+# 忽略权重文件
+*.pt
+*.pth
+*.onnx
+
+# 忽略环境和数据集
+venv/
+.env/
+Dataset/
+datasets/
+
+# 忽略IDE配置
+.idea/
+.vscode/
