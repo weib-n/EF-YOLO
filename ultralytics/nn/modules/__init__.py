@@ -188,4 +188,4 @@ __all__ = (
     "YOLOESegment26",
     "v10Detect",
 )
-from .block import SPDConv, DP_FSE
+from .block import DP_FSE, SPDConv
