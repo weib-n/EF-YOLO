@@ -12,14 +12,13 @@ import torch.nn as nn
 
 from ultralytics.nn.autobackend import check_class_names
 from ultralytics.nn.modules import (
-    SPDConv,
-    DP_FSE,
     AIFI,
     C1,
     C2,
     C2PSA,
     C3,
     C3TR,
+    DP_FSE,
     ELAN1,
     OBB,
     OBB26,
@@ -68,6 +67,7 @@ from ultralytics.nn.modules import (
     SCDown,
     Segment,
     Segment26,
+    SPDConv,
     TorchVision,
     WorldDetect,
     YOLOEDetect,
