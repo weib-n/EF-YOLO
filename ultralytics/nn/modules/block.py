@@ -2065,13 +2065,15 @@ class RealNVP(nn.Module):
             self.float()
         z, log_det = self.backward_p(x)
         return self.prior.log_prob(z) + log_det
+
+
 # [cite_start]================== EF-YOLO 论文新增模块 [cite: 2, 11] ==================
 
+
 class SPDConv(nn.Module):
+    """[cite_start]SPD-Conv 无损下采样模块 [cite: 3] 替代步长卷积，利用 Space-to-Depth 变换保留微小火点特征。.
     """
-    [cite_start]SPD-Conv 无损下采样模块 [cite: 3]
-    替代步长卷积，利用 Space-to-Depth 变换保留微小火点特征。
-    """
+
     def __init__(self, c1, c2, dimension=1):
         super().__init__()
         self.conv = nn.Conv2d(c1 * 4, c2, kernel_size=1, stride=1, padding=0, bias=False)
@@ -2086,19 +2088,17 @@ class SPDConv(nn.Module):
         x_cat = torch.cat([x0, x1, x2, x3], dim=1)
         return self.act(self.bn(self.conv(x_cat)))
 
+
 class DP_FSE(nn.Module):
+    """[cite_start]DP-FSE 双路特征增强模块 [cite: 12] 结合 AvgPool 和 MaxPool 增强火焰边缘与稀薄烟雾的特征响应。.
     """
-    [cite_start]DP-FSE 双路特征增强模块 [cite: 12]
-    结合 AvgPool 和 MaxPool 增强火焰边缘与稀薄烟雾的特征响应。
-    """
+
     def __init__(self, c1, ratio=16):
         super().__init__()
         self.avg_pool = nn.AdaptiveAvgPool2d(1)
         self.max_pool = nn.AdaptiveMaxPool2d(1)
         self.mlp = nn.Sequential(
-            nn.Conv2d(c1, c1 // ratio, 1, bias=False),
-            nn.ReLU(),
-            nn.Conv2d(c1 // ratio, c1, 1, bias=False)
+            nn.Conv2d(c1, c1 // ratio, 1, bias=False), nn.ReLU(), nn.Conv2d(c1 // ratio, c1, 1, bias=False)
         )
         self.sigmoid = nn.Sigmoid()
 
